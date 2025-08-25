@@ -33,13 +33,21 @@ pipeline {
         stage('Docker build') {
             steps {
                 dir('hello-world-server') {
-                    sh 'docker build -t $DOCKER_USERNAME/$APP_NAME:latest .'
+                    sh 'docker build -t $DOCKER_USERNAME/$APP_NAME:${BUILD_NUMBER} .'
                 }
             }
         }
         stage('Docker push ') {
             steps {
-                sh 'docker push $DOCKER_USERNAME/$APP_NAME:latest'
+                sh 'docker push $DOCKER_USERNAME/$APP_NAME:${BUILD_NUMBER}'
+            }
+        }
+        stage('Deploy Kubernetes ') {
+            steps {
+                dir('hello-world-server'){
+                sh "sed -i 's|amolsontakke96/hello-server:.*|amolsontakke96/hello-server:${BUILD_NUMBER}|' deployment.yaml"
+                sh 'kubectl apply -f deployment.yaml'
+                }
             }
         }
 
