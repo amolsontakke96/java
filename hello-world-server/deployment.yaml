@@ -2,7 +2,6 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  creationTimestamp: null
   labels:
     app: hello-server
   name: hello-server
@@ -11,17 +10,15 @@ spec:
   selector:
     matchLabels:
       app: hello-server
-  strategy: {}
   template:
     metadata:
-      creationTimestamp: null
       labels:
         app: hello-server
     spec:
       containers:
         - image: amolsontakke96/hello-server:latest 
           name: hello-server
-status: {}
+          
 ---
 apiVersion: v1
 kind: Service
@@ -33,10 +30,5 @@ spec:
     app: hello-server
   ports:
     - port: 8080
-      # By default and for convenience, the `targetPort` is set to
-      # the same value as the `port` field.
       targetPort: 8080
-      # Optional field
-      # By default and for convenience, the Kubernetes control plane
-      # will allocate a port from a range (default: 30000-32767)
       nodePort: 31234
