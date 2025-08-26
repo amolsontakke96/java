@@ -21,7 +21,7 @@ public class HelloServer {
     static class HelloHandler implements HttpHandler {
         @Override
         public void handle(HttpExchange exchange) throws IOException {
-            String response = "Hello, Amol Welcom to java Server";
+            String response = "Hello, Amol Welcome to java Server";
             exchange.sendResponseHeaders(200, response.getBytes().length);
             OutputStream os = exchange.getResponseBody();
             os.write(response.getBytes());
